@@ -63,11 +63,30 @@ else
 
 }
 //add number and its prime status to file
-void prime_file(int num, int p)
+void write_primefile(int num, int p)
 {
 	fstream record("record.txt", ios::app);
 	record << num << '\t' << '\t' << p << '\t' << '\t' << -1 << '\n';
 	record.close();
+}
+//read number and its prime status from file
+int read_primefile(int n)
+{
+	int record_num;
+	int prime_status;
+	fstream record("record.txt", ios::in);
+	while(!(record.eof()))
+	{
+		record >> record_num >> prime_status;
+		if (record_num == n)
+			break;
+	}
+	if (record_num != n)
+	{
+		prime_status = -2;
+	}
+	record.close();
+	return prime_status;
 }
 //generates new record.txt
 void genrecord()

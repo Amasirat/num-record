@@ -5,14 +5,33 @@ void menu();
 
 int main()
 {
-menu();
+    bool end = false;
+    int mode_program{};
+    while (end == false)
+    {
+        menu();
+        cin >> mode_program;
+        switch (mode_program)
+        {
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                system("clear");    //clearing the screen for linux and mac terminals
+                //system("cls")     //clearing the screen of the windows console
+                break;
+            case 5:
+                end = true;
+                break;
+            default:
+                //for ignoring invalid flag for cin due to possible data type inconsistency created by the user
+                cin.clear();
+                cin.ignore();                
+                cout << "Your entry is unsupported\n";
+        }
+    }
+}
 
-}
-//print main menu
-void menu()
-{
-cout << "1.Check if a number is prime\n";
-cout << "2.Check if a number is perfect\n";
-cout << "3.Generate 10 random numbers\n";
-cout << "4.End program\n";
-}

@@ -1,7 +1,6 @@
 #include <iostream>
 #include "funcs.cpp"
 using namespace std;
-void menu();
 
 int main()
 {

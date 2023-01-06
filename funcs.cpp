@@ -70,20 +70,21 @@ void write_primefile(int num, int p)
 	record.close();
 }
 //read number and its prime status from file
+//this function is broken
 int read_primefile(int n)
 {
-	int record_num;
 	int prime_status;
 	fstream record("record.txt", ios::in);
+	if (!record)
+		cout << "Error! Record could not be found\n";
 	while(!(record.eof()))
 	{
+		int record_num;
 		record >> record_num >> prime_status;
 		if (record_num == n)
 			break;
-	}
-	if (record_num != n)
-	{
-		prime_status = -2;
+		else
+			prime_status = -2;
 	}
 	record.close();
 	return prime_status;
@@ -92,8 +93,22 @@ int read_primefile(int n)
 void genrecord()
 {
 	fstream record("record.txt", ios::out);
-	record << "num" << '\t' << '\t' << "pr" << '\t' << '\t' << "per" << '\n';
+	record << 1 << '\t' << '\t' << 0 << '\t' << '\t' << 0 << '\n';
 	record.close();
+}
+//generates 10 random numbers and saves them in record with their prime and perfect status checked
+void numGenerate()
+{
+	const int range = 1000;
+	int num{0};
+	srand((unsigned) time(NULL));
+	fstream record("record.txt", ios::app);
+
+	for (int i = 1; i <= 10; i++)
+	{
+		num = rand() % range;
+		record << num << '\t' << '\t' << prime(num) << '\t' << '\t' << perfect(num) << '\n';
+	}
 }
 //print main menu
 void menu()

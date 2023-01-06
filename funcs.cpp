@@ -109,6 +109,7 @@ void numGenerate()
 		num = rand() % range;
 		record << num << '\t' << '\t' << prime(num) << '\t' << '\t' << perfect(num) << '\n';
 	}
+	record.close();
 }
 //print main menu
 void menu()

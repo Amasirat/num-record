@@ -48,10 +48,11 @@ else
 	return 0;
 }
 //add number and its prime status to file
-void write_primefile(int num, int p)
+void write_primefile(int num, int p, int perfect)
 {
+	perfect = -1;
 	fstream record("record.txt", ios::app);
-	record << num << '\t' << '\t' << p << '\t' << '\t' << -1 << '\n';
+	record << num << '\t' << '\t' << p << '\t' << '\t' << perfect << '\n';
 	record.close();
 }
 //read number and its prime status from file

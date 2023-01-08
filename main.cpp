@@ -34,7 +34,8 @@ int main()
               else
                 {
                     prime_status = prime(usr_num);//stores values 0(for not prime) and 1(for prime)
-                    write_primefile(usr_num, prime_status);
+                    perfect_status = -1;
+                    write_primefile(usr_num, prime_status, perfect_status);
                     num_state = "saved in record";
                 }
                 

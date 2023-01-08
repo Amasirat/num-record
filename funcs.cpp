@@ -97,6 +97,7 @@ void numGenerate()
 		record << num << '\t' << '\t' << prime(num) << '\t' << '\t' << perfect(num) << '\n';
 	}
 	record.close();
+	//possible bug: generating numbers that exist
 }
 //print main menu
 void menu()

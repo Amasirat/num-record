@@ -33,19 +33,18 @@ int main()
                     cin.ignore();
                     cout << "input is invalid, try again!\n";
                 }
-//              my implementation of reading from file is broken, for now it will be commented out
 
-//               if (read_primefile(usr_num) == -2)
-//                {
+              if (read_primefile(usr_num) == -2)
+                {
                     prime_status = prime(usr_num);//stores values 0(for not prime) and 1(for prime)
                     write_primefile(usr_num, prime_status);
                     num_state = "saved in record";
-//                }
-//                else
-//                {
-//                    prime_status = read_primefile(usr_num);
-//                    num_state = "read from record";
-//               }
+                }
+               else
+               {
+                    prime_status = read_primefile(usr_num);
+                    num_state = "read from record";
+                }
                 if (prime_status == 1)
                     cout << "Number is prime(" << num_state << ")\n";
                 else   

@@ -24,7 +24,7 @@ int perfect(int x)
 //function for checking if an integer is prime, returns 0 if false and 1 if true
 int prime(int x)
 {
-int remainder{0};
+int remainder{};
 switch (x)
 {
 	case 0:

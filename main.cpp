@@ -2,7 +2,7 @@
 //this program currently cannot read a number that was already evaluated for another status before
 int main()
 {
-    bool end = false;
+    bool end = false;     //a flag to determine the end of the program used in a while loop
     int mode_program;
     string num_state;     //to determine if number was read from file or written on file
 
@@ -20,6 +20,8 @@ int main()
             {  
                 number usr_num;
                 usr_num.num = getNum();//to get user number and store it in num element of the number struct
+                usr_num.prime = -1;     //Default unknown state
+                usr_num.perfect = -1;   //Default unknown state
 
                 if (numCheck(usr_num.num) == 1)
                 {
@@ -29,7 +31,6 @@ int main()
               else
                 {
                     usr_num.prime = prime(usr_num.num);//stores values 0(for not prime) and 1(for prime)
-                    usr_num.perfect = -1;
                     write_file(usr_num);
                     num_state = "saved in record";
                 }
@@ -44,6 +45,8 @@ int main()
             {
                 number usr_num;
                 usr_num.num = getNum();
+                usr_num.prime = -1;
+                usr_num.perfect = -1;
 
                 if (numCheck(usr_num.num) == 1)
                 {
@@ -53,7 +56,6 @@ int main()
                 else
                 {
                     usr_num.perfect = perfect(usr_num.num);
-                    usr_num.prime = -1;
                     write_file(usr_num);
                     num_state = "saved in record";
                 }

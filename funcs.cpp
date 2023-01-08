@@ -83,6 +83,41 @@ void genrecord()
 	record << 0 << '\t' << '\t' << 0 << '\t' << '\t' << 0 << '\n';
 	record.close();
 }
+//get a natural number from user and return it
+int getNum()
+{
+    int usr_num;
+	cout << "Enter a natural number:\n";
+    while(cin >> usr_num && usr_num <= 0 || cin.fail())
+    {
+    	//ignore inputs that are not integers
+    	cin.clear();    
+    	cin.ignore();
+        cout << "input is invalid, try again!\n";
+    }
+	return usr_num;
+}
+//checks if a number exists in record. 0 for (not in record) and 1 for (in record)
+int numCheck(int num)
+{
+	int record_num;
+	int prime_status;
+	int perfect_status;
+	fstream record("record.txt", ios::in);
+	if (!record)
+		cout << "Error! Can not find record in directory";
+	while(!record.eof())
+	{
+		record >> record_num >> prime_status >> perfect_status;
+		if (record_num == num)
+			break;
+	}
+	record.close();
+	if (record_num != num)
+		return 0;
+	else
+		return 1;
+}
 //generates 10 random numbers and saves them in record with their prime and perfect status checked
 void numGenerate()
 {
@@ -91,9 +126,16 @@ void numGenerate()
 	srand((unsigned) time(NULL));
 	fstream record("record.txt", ios::app);
 
+	if (!record)
+	{
+		cout << "Error! Couldn't find file in directory";
+	}
+
 	for (int i = 1; i <= 10; i++)
 	{
 		num = rand() % range;
+		while (numCheck(num) == 1)
+			num = rand() % range;
 		record << num << '\t' << '\t' << prime(num) << '\t' << '\t' << perfect(num) << '\n';
 	}
 	record.close();

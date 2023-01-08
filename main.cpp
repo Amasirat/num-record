@@ -25,26 +25,19 @@ int main()
             {
                 string num_state;
                 int usr_num;
-                cout << "Enter a natural number:\n";
-                while(cin >> usr_num && usr_num <= 0 || cin.fail())
+                usr_num = getNum();
+                if (numCheck(usr_num) == 1)
                 {
-                    //ignore inputs that are not integers
-                    cin.clear();    
-                    cin.ignore();
-                    cout << "input is invalid, try again!\n";
+                    prime_status = read_primefile(usr_num);
+                    num_state = "read from record";
                 }
-
-              if (read_primefile(usr_num) == -2)
+              else
                 {
                     prime_status = prime(usr_num);//stores values 0(for not prime) and 1(for prime)
                     write_primefile(usr_num, prime_status);
                     num_state = "saved in record";
                 }
-               else
-               {
-                    prime_status = read_primefile(usr_num);
-                    num_state = "read from record";
-                }
+                
                 if (prime_status == 1)
                     cout << "Number is prime(" << num_state << ")\n";
                 else   
@@ -52,7 +45,13 @@ int main()
                 break;
             }
             case 2:
+            {
+                string num_state;
+                int usr_num;
+                usr_num = getNum();
+
                 break;
+            }
             case 3:
                 numGenerate();
                 cout << "Generated 10 numbers and added them to record\n";

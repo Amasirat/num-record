@@ -83,8 +83,8 @@ int numCheck(int num)
 	int prime_status;
 	int perfect_status;
 	fstream record("record.txt", ios::in);
-	if (!record)
-		cout << "Error! Can not find record in directory";
+	//if (!record)
+	//	cout << "Error! Can not find record in directory"; //needs a better way of handling this possibility
 	while(!record.eof())
 	{
 		record >> record_num >> prime_status >> perfect_status;
@@ -106,14 +106,11 @@ void numGenerate()
 	fstream record("record.txt", ios::app);
 
 	if (!record)
-	{
 		cout << "Error! Couldn't find file in directory";
-	}
-
 	for (int i = 1; i <= 10; i++)
 	{
 		num = rand() % range;
-		while (numCheck(num) == 1)		//to make sure that random number does not exist in record
+		while (numCheck(num) == 1)		//to make sure that random number does not already exist in record
 			num = rand() % range;
 		record << num << '\t' << '\t' << prime(num) << '\t' << '\t' << perfect(num) << '\n';
 	}
@@ -122,16 +119,16 @@ void numGenerate()
 //get a natural number from user and return it
 int getNum()
 {
-    int usr_num;
+    int num;
 	cout << "Enter a natural number:\n";
-    while(cin >> usr_num && usr_num <= 0 || cin.fail())
+    while(cin >> num && num <= 0 || cin.fail())
     {
     	//ignore inputs that are not integers
     	cin.clear();    
     	cin.ignore();
         cout << "input is invalid, try again!\n";
     }
-	return usr_num;
+	return num;
 }
 //generates new record.txt
 void genrecord()
@@ -143,9 +140,9 @@ void genrecord()
 //print main menu
 void menu()
 {
-cout << "1.Check if a number is prime\n";
-cout << "2.Check if a number is perfect\n";
-cout << "3.Generate 10 random numbers\n";
-cout << "4.Clear screen\n";
-cout << "5.End program\n";
+	cout << "1.Check if a number is prime\n";
+	cout << "2.Check if a number is perfect\n";
+	cout << "3.Generate 10 random numbers\n";
+	cout << "4.Clear screen\n";
+	cout << "5.End program\n";
 }

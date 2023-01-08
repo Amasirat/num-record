@@ -1,14 +1,12 @@
 #include <iostream>
 #include "funcs.cpp"
 using namespace std;
-
+//this program currently cannot read a number that was already evaluated for another status before
 int main()
 {
     bool end = false;
     int mode_program;
-    int prime_status;
-    int perfect_status;
-
+    string num_state;     //to determine if number was read from file or written on file
 
     ifstream file("record.txt");
     if (!file)
@@ -21,8 +19,7 @@ int main()
         switch (mode_program)
         {
             case 1:
-            {
-                string num_state;     //to determine if number was read from file or written on file
+            {  
                 number usr_num;
                 usr_num.num = getNum();//to get user number and store it in num element of the number struct
 
@@ -47,7 +44,25 @@ int main()
             }
             case 2:
             {
+                number usr_num;
+                usr_num.num = getNum();
 
+                if (numCheck(usr_num.num) == 1)
+                {
+                    usr_num.perfect = read_file(usr_num).perfect;
+                    num_state = "read from record";
+                }
+                else
+                {
+                    usr_num.perfect = perfect(usr_num.num);
+                    usr_num.prime = -1;
+                    write_file(usr_num);
+                    num_state = "saved in record";
+                }
+                if (usr_num.perfect == 1)
+                    cout << "Number is perfect(" << num_state << ")\n";
+                else   
+                    cout << "Number is not perfect(" << num_state << ")\n";
                 break;
             }
             case 3:

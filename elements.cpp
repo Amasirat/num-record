@@ -79,20 +79,18 @@ number read_file(number num)
 //checks if a number exists in record. 0 for (not in record) and 1 for (in record)
 int numCheck(int num)
 {
-	int record_num;
-	int prime_status;
-	int perfect_status;
+	number record_num;
 	fstream record("record.txt", ios::in);
 	//if (!record)
 	//	cout << "Error! Can not find record in directory"; //needs a better way of handling this possibility
 	while(!record.eof())
 	{
-		record >> record_num >> prime_status >> perfect_status;
-		if (record_num == num)
+		record >> record_num.num >> record_num.prime >> record_num.perfect;
+		if (record_num.num == num)
 			break;
 	}
 	record.close();
-	if (record_num != num)
+	if (record_num.num != num)
 		return 0;
 	else
 		return 1;

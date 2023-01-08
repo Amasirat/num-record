@@ -1,6 +1,4 @@
-#include <iostream>
-#include "funcs.cpp"
-using namespace std;
+#include "elements.cpp"
 //this program currently cannot read a number that was already evaluated for another status before
 int main()
 {
@@ -85,4 +83,3 @@ int main()
     }
     return 0;
 }
-

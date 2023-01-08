@@ -38,7 +38,7 @@ int main()
                     write_file(usr_num);
                     num_state = "saved in record";
                 }
-                
+                //showing the number's status to user
                 if (usr_num.prime == 1)
                     cout << "Number is prime(" << num_state << ")\n";
                 else   
@@ -47,9 +47,6 @@ int main()
             }
             case 2:
             {
-                string num_state;
-                int usr_num;
-                usr_num = getNum();
 
                 break;
             }

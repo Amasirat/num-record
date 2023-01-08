@@ -1,6 +1,12 @@
 #include <iostream>
 #include <fstream>
 using namespace std;
+//struct of type number containing three elements
+struct number{
+    int num;
+    int prime;
+    int perfect;
+};
 //function for checking if a positive integer is a perfect number, returns 0 if false and 1 if true
 int perfect(int x)
 {
@@ -48,55 +54,27 @@ else
 	return 0;
 }
 //add number and its prime status to file
-void write_primefile(int num, int p, int perfect)
+void write_file(number usr_num)
 {
-	perfect = -1;
 	fstream record("record.txt", ios::app);
-	record << num << '\t' << '\t' << p << '\t' << '\t' << perfect << '\n';
+	record << usr_num.num << '\t' << '\t' << usr_num.prime << '\t' << '\t' << usr_num.perfect << '\n';
 	record.close();
 }
 //read number and its prime status from file
-//this function is broken
-int read_primefile(int n)
+number read_file(number num)
 {
-	int prime_status;
-	int perfect_status;
 	fstream record("record.txt", ios::in);
 	if (!record)
 		cout << "Error! Record could not be found\n";
 	while(!(record.eof()))
 	{
 		int record_num;
-		record >> record_num >> prime_status >> perfect_status;
-		if (record_num == n){
+		record >> record_num >> num.prime >> num.perfect;
+		if (record_num == num.num)
 			break;
-		}
-		else
-			prime_status = -2;
 	}
 	record.close();
-	return prime_status;
-}
-//generates new record.txt
-void genrecord()
-{
-	fstream record("record.txt", ios::out);
-	record << 0 << '\t' << '\t' << 0 << '\t' << '\t' << 0 << '\n';
-	record.close();
-}
-//get a natural number from user and return it
-int getNum()
-{
-    int usr_num;
-	cout << "Enter a natural number:\n";
-    while(cin >> usr_num && usr_num <= 0 || cin.fail())
-    {
-    	//ignore inputs that are not integers
-    	cin.clear();    
-    	cin.ignore();
-        cout << "input is invalid, try again!\n";
-    }
-	return usr_num;
+	return num;
 }
 //checks if a number exists in record. 0 for (not in record) and 1 for (in record)
 int numCheck(int num)
@@ -135,12 +113,32 @@ void numGenerate()
 	for (int i = 1; i <= 10; i++)
 	{
 		num = rand() % range;
-		while (numCheck(num) == 1)
+		while (numCheck(num) == 1)		//to make sure that random number does not exist in record
 			num = rand() % range;
 		record << num << '\t' << '\t' << prime(num) << '\t' << '\t' << perfect(num) << '\n';
 	}
 	record.close();
-	//possible bug: generating numbers that exist
+}
+//get a natural number from user and return it
+int getNum()
+{
+    int usr_num;
+	cout << "Enter a natural number:\n";
+    while(cin >> usr_num && usr_num <= 0 || cin.fail())
+    {
+    	//ignore inputs that are not integers
+    	cin.clear();    
+    	cin.ignore();
+        cout << "input is invalid, try again!\n";
+    }
+	return usr_num;
+}
+//generates new record.txt
+void genrecord()
+{
+	fstream record("record.txt", ios::out);
+	record << 0 << '\t' << '\t' << 0 << '\t' << '\t' << 0 << '\n';
+	record.close();
 }
 //print main menu
 void menu()

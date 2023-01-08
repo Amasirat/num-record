@@ -1,6 +1,5 @@
 #include <iostream>
 #include "funcs.cpp"
-#include <string>
 using namespace std;
 
 int main()
@@ -23,23 +22,24 @@ int main()
         {
             case 1:
             {
-                string num_state;
-                int usr_num;
-                usr_num = getNum();
-                if (numCheck(usr_num) == 1)
+                string num_state;     //to determine if number was read from file or written on file
+                number usr_num;
+                usr_num.num = getNum();//to get user number and store it in num element of the number struct
+
+                if (numCheck(usr_num.num) == 1)
                 {
-                    prime_status = read_primefile(usr_num);
+                    usr_num.prime = read_file(usr_num).prime;
                     num_state = "read from record";
                 }
               else
                 {
-                    prime_status = prime(usr_num);//stores values 0(for not prime) and 1(for prime)
-                    perfect_status = -1;
-                    write_primefile(usr_num, prime_status, perfect_status);
+                    usr_num.prime = prime(usr_num.num);//stores values 0(for not prime) and 1(for prime)
+                    usr_num.perfect = -1;
+                    write_file(usr_num);
                     num_state = "saved in record";
                 }
                 
-                if (prime_status == 1)
+                if (usr_num.prime == 1)
                     cout << "Number is prime(" << num_state << ")\n";
                 else   
                     cout << "Number is not prime(" << num_state << ")\n";

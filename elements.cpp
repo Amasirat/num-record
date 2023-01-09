@@ -118,8 +118,8 @@ void numGenerate()
 int getNum()
 {
     int num;
-	cout << "Enter a natural number:\n";
-    while(cin >> num && num <= 0 || cin.fail())
+	cout << "Enter a natural number(0 to exit mode):\n";
+    while(cin >> num && num < 0 || cin.fail())
     {
     	//ignore inputs that are not integers
     	cin.clear();    

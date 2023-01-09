@@ -19,10 +19,14 @@ int main()
             case 1:
             {  
                 number usr_num;
-                usr_num.num = getNum();//to get user number and store it in num element of the number struct
+                usr_num.num = -1;
                 usr_num.prime = -1;     //Default unknown state
                 usr_num.perfect = -1;   //Default unknown state
+                while (usr_num.num != 0){
+                usr_num.num = getNum();//to get user number and store it in num element of the number struct
 
+                if (usr_num.num == 0)
+                    continue;
                 if (numCheck(usr_num.num) == 1)
                 {
                     usr_num.prime = read_file(usr_num).prime;
@@ -39,14 +43,21 @@ int main()
                     cout << "Number is prime(" << num_state << ")\n";
                 else   
                     cout << "Number is not prime(" << num_state << ")\n";
+                }
                 break;
             }
             case 2:
             {
                 number usr_num;
-                usr_num.num = getNum();
+                usr_num.num = -1;
                 usr_num.prime = -1;
                 usr_num.perfect = -1;
+
+                while (usr_num.num != 0){
+                usr_num.num = getNum();
+
+                if (usr_num.num == 0)
+                    continue;
 
                 if (numCheck(usr_num.num) == 1)
                 {
@@ -63,6 +74,7 @@ int main()
                     cout << "Number is perfect(" << num_state << ")\n";
                 else   
                     cout << "Number is not perfect(" << num_state << ")\n";
+                }
                 break;
             }
             case 3:

@@ -48,27 +48,27 @@ int main()
                 number usr_num = createNum();   //for storing user number and its status
 
                 while (usr_num.num != 0){
-                    
-                usr_num.num = getNum();
 
-                if (usr_num.num == 0)
+                    usr_num.num = getNum();
+
+                    if (usr_num.num == 0)
                     continue;
 
-                if (numCheck(usr_num.num) == 1)
-                {
-                    usr_num.perfect = read_file(usr_num).perfect;
-                    num_state = "read from record";
-                }
-                else
-                {
-                    usr_num.perfect = perfect(usr_num.num);
-                    write_file(usr_num);
-                    num_state = "saved in record";
-                }
-                if (usr_num.perfect == 1)
-                    cout << "Number is perfect(" << num_state << ")\n";
-                else   
-                    cout << "Number is not perfect(" << num_state << ")\n";
+                    if (numCheck(usr_num.num) == 1)
+                    {
+                        usr_num.perfect = read_file(usr_num).perfect;
+                        num_state = "read from record";
+                    }
+                    else
+                    {
+                        usr_num.perfect = perfect(usr_num.num);
+                        write_file(usr_num);
+                        num_state = "saved in record";
+                    }
+                    if (usr_num.perfect == 1)
+                        cout << "Number is perfect(" << num_state << ")\n";
+                    else   
+                        cout << "Number is not perfect(" << num_state << ")\n";
                 }
                 break;
             }

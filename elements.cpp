@@ -7,6 +7,13 @@ struct number{
     int prime;
     int perfect;
 };
+//generates new record.txt
+void genrecord(string name)
+{
+	fstream record(name, ios::out);
+	record << 0 << '\t' << '\t' << 0 << '\t' << '\t' << 0 << '\n';
+	record.close();
+}
 //function for checking if a positive integer is a perfect number, returns 0 if false and 1 if true
 int perfect(int x)
 {
@@ -66,9 +73,9 @@ number createNum()
 	return usr_num;
 }
 //add number and its prime status to file
-void write_file(number usr_num)
+void write_file(number usr_num , string name)
 {
-	fstream record("record.txt", ios::app);
+	fstream record(name, ios::app);
 	record << usr_num.num << '\t' << '\t' << usr_num.prime << '\t' << '\t' << usr_num.perfect << '\n';
 	record.close();
 }
@@ -126,6 +133,45 @@ void numGenerate()
 	}
 	record.close();
 }
+int find_index(number usr_num)
+{
+	number record_num;
+	fstream record("record.txt", ios::in);
+	int index = 1;
+	while (!record.eof())
+	{
+		record >> record_num.num >> record_num.prime >> record_num.perfect;
+		if (record_num.num == usr_num.num && record_num.prime || record_num.perfect == -1)
+			break;
+		index++;
+	}
+	record.close();
+	return index;
+}
+void edit_file(number usr_num)
+{
+	number record_num;
+	int index = find_index(usr_num);
+	genrecord("temprecord.txt");
+	fstream record("record.txt", ios::in);
+	fstream newrecord("temprecord.txt",ios::app);
+	for (int i = 1;!record.eof();i++)
+	{
+		record >> record_num.num >> record_num.prime >> record_num.perfect;
+		if (record_num.num == 0)
+			continue;
+		if (i == index)
+		{			
+			write_file(usr_num, "temprecord.txt");
+			continue;
+		}
+		else
+			write_file(record_num, "temprecord.txt");
+	}
+	record.close();
+	newrecord.close();
+	rename("temprecord.txt", "record.txt");
+}
 //get a natural number from user and return it
 int getNum()
 {
@@ -139,13 +185,6 @@ int getNum()
         cout << "input is invalid, try again!\n";
     }
 	return num;
-}
-//generates new record.txt
-void genrecord()
-{
-	fstream record("record.txt", ios::out);
-	record << 0 << '\t' << '\t' << 0 << '\t' << '\t' << 0 << '\n';
-	record.close();
 }
 //print main menu
 void menu()

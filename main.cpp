@@ -5,10 +5,11 @@ int main()
     bool end = false;     //a flag to determine the end of the program used in a while loop
     int mode_program;
     string num_state;     //to determine if number was read from file or written on file
+    string filename = "record.txt";
 
-    ifstream file("record.txt");
+    ifstream file(filename);
     if (!file)
-        genrecord();        //generates a record text file at the start of program(funcs.cpp)
+        genrecord(filename);        //generates a record text file at the start of program(funcs.cpp)
     
     while (end == false)
     {
@@ -27,12 +28,20 @@ int main()
                 if (numCheck(usr_num.num) == 1)
                 {
                     usr_num.prime = read_file(usr_num).prime;
-                    num_state = "read from record";
+                    if (usr_num.prime == -1)
+                    {
+                        usr_num.prime = prime(usr_num.num);
+                        usr_num.perfect = read_file(usr_num).perfect;
+                        edit_file(usr_num);
+                        num_state = "edited record";
+                    }
+                    else
+                        num_state = "read from record";
                 }
               else
                 {
                     usr_num.prime = prime(usr_num.num);//stores values 0(for not prime) and 1(for prime)
-                    write_file(usr_num);
+                    write_file(usr_num, filename);
                     num_state = "saved in record";
                 }
                 //showing the number's status to user
@@ -62,7 +71,7 @@ int main()
                     else
                     {
                         usr_num.perfect = perfect(usr_num.num);
-                        write_file(usr_num);
+                        write_file(usr_num, filename);
                         num_state = "saved in record";
                     }
                     if (usr_num.perfect == 1)

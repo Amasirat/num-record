@@ -53,6 +53,18 @@ if (remainder != 0)
 else
 	return 0;
 }
+//initializing variable of type number to store user number and its status
+number createNum()
+{
+    number usr_num;
+    //an effort to reduce the possibility of compiler initilizing variable to zero
+    usr_num.num = -1;  
+
+    usr_num.prime = -1;     //Default unknown state
+    usr_num.perfect = -1;   //Default unknown state
+
+	return usr_num;
+}
 //add number and its prime status to file
 void write_file(number usr_num)
 {

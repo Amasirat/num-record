@@ -18,10 +18,7 @@ int main()
         {
             case 1:
             {  
-                number usr_num;
-                usr_num.num = -1;
-                usr_num.prime = -1;     //Default unknown state
-                usr_num.perfect = -1;   //Default unknown state
+                number usr_num = createNum();   //for storing user number and its status
                 while (usr_num.num != 0){
                 usr_num.num = getNum();//to get user number and store it in num element of the number struct
 
@@ -48,12 +45,10 @@ int main()
             }
             case 2:
             {
-                number usr_num;
-                usr_num.num = -1;
-                usr_num.prime = -1;
-                usr_num.perfect = -1;
+                number usr_num = createNum();   //for storing user number and its status
 
                 while (usr_num.num != 0){
+                    
                 usr_num.num = getNum();
 
                 if (usr_num.num == 0)

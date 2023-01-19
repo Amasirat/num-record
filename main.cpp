@@ -5,7 +5,6 @@ int main()
     bool end = false;     //a flag to determine the end of the program used in a while loop
     int mode_program;
     string num_state;     //to determine if number was read from file or written on file
-    string filename = "record.txt";
 
     ifstream file(filename);
     if (!file)
@@ -19,11 +18,11 @@ int main()
         {
             case 1:
             {  
-                number usr_num = createNum();   //for storing user number and its status
+                number usr_num = createNum();   //creating a var for storing user's number
                 while (usr_num.num != 0){
                 usr_num.num = getNum();//to get user number and store it in num element of the number struct
 
-                if (usr_num.num == 0)
+                if (usr_num.num == 0)       //give user the ability to quit modes
                     continue;
                 if (numCheck(usr_num.num) == 1)
                 {

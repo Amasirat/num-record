@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 using namespace std;
+string filename = "record.txt";
 //struct of type number containing three elements
 struct number{
     int num;
@@ -11,7 +12,7 @@ struct number{
 void genrecord(string name)
 {
 	fstream record(name, ios::out);
-	record << 0 << '\t' << '\t' << 0 << '\t' << '\t' << 0 << '\n';
+	record << 0 << '\t' << '\t' << 0 << '\t' << '\t' << 0;
 	record.close();
 }
 //function for checking if a positive integer is a perfect number, returns 0 if false and 1 if true
@@ -76,7 +77,7 @@ number createNum()
 void write_file(number usr_num , string name)
 {
 	fstream record(name, ios::app);
-	record << usr_num.num << '\t' << '\t' << usr_num.prime << '\t' << '\t' << usr_num.perfect << '\n';
+	record << '\n' << usr_num.num << '\t' << '\t' << usr_num.prime << '\t' << '\t' << usr_num.perfect;
 	record.close();
 }
 //read number and its prime status from file
@@ -99,7 +100,7 @@ number read_file(number num)
 int numCheck(int num)
 {
 	number record_num;
-	fstream record("record.txt", ios::in);
+	fstream record(filename, ios::in);
 	//if (!record)
 	//	cout << "Error! Can not find record in directory"; //needs a better way of handling this possibility
 	while(!record.eof())
@@ -118,18 +119,20 @@ int numCheck(int num)
 void numGenerate()
 {
 	const int range = 1000;
-	int num{};
+	number num;
 	srand((unsigned) time(NULL));
-	fstream record("record.txt", ios::app);
+	fstream record(filename, ios::app);
 
 	if (!record)
 		cout << "Error! Couldn't find file in directory";
 	for (int i = 1; i <= 10; i++)
 	{
-		num = rand() % range;
-		while (numCheck(num) == 1)		//to make sure that random number does not already exist in record
-			num = rand() % range;
-		record << num << '\t' << '\t' << prime(num) << '\t' << '\t' << perfect(num) << '\n';
+		num.num = rand() % range;
+		while (numCheck(num.num) == 1)		//to make sure that random number does not already exist in record
+			num.num = rand() % range;
+		num.prime = prime(num.num);
+		num.perfect = perfect(num.num);
+		write_file(num,"record.txt");
 	}
 	record.close();
 }
@@ -151,6 +154,7 @@ int find_index(number usr_num)
 void edit_file(number usr_num)
 {
 	number record_num;
+	string checker;
 	int index = find_index(usr_num);
 	genrecord("temprecord.txt");
 	fstream record("record.txt", ios::in);
@@ -160,11 +164,10 @@ void edit_file(number usr_num)
 		record >> record_num.num >> record_num.prime >> record_num.perfect;
 		if (record_num.num == 0)
 			continue;
-		if (i == index)
-		{			
+		cout << record_num.num << '\n';
+
+		if (i == index)	
 			write_file(usr_num, "temprecord.txt");
-			continue;
-		}
 		else
 			write_file(record_num, "temprecord.txt");
 	}

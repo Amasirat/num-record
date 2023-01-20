@@ -18,12 +18,16 @@ int main()
         {
             case 1:
             {  
-                number usr_num = createNum();   //creating a var for storing user's number
-                while (usr_num.num != 0){
-                usr_num.num = getNum();//to get user number and store it in num element of the number struct
+                int ender{1};
+                while (ender != 0){
+                number usr_num = createNum();   //initializing a var for storing user's number
+                usr_num.num = getNum();     //get number and store it in num element of the number struct
 
                 if (usr_num.num == 0)       //give user the ability to quit modes
+                {  
+                    ender = usr_num.num;
                     continue;
+                }       
                 if (numCheck(usr_num.num) == 1)
                 {
                     usr_num.prime = read_file(usr_num).prime;
@@ -31,7 +35,7 @@ int main()
                     {
                         usr_num.prime = prime(usr_num.num);
                         usr_num.perfect = read_file(usr_num).perfect;
-                        edit_file(usr_num);
+                        edit_prime_file(usr_num);
                         num_state = "edited record";
                     }
                     else
@@ -53,30 +57,41 @@ int main()
             }
             case 2:
             {
-                number usr_num = createNum();   //for storing user number and its status
-
-                while (usr_num.num != 0){
-
-                    usr_num.num = getNum();
+                int ender{1};       //used as condition checker for the while loop
+                while (ender != 0){
+                    number usr_num = createNum();   //initializing var for user number and its status
+                    usr_num.num = getNum();         //obtain user number
 
                     if (usr_num.num == 0)
-                    continue;
-
-                    if (numCheck(usr_num.num) == 1)
                     {
-                        usr_num.perfect = read_file(usr_num).perfect;
-                        num_state = "read from record";
+                        ender = usr_num.num;    //for ending the while loop
+                        continue;
                     }
-                    else
+
+                if (numCheck(usr_num.num) == 1)
+                {
+                    usr_num.perfect = read_file(usr_num).perfect;
+                    if (usr_num.perfect == -1)
                     {
                         usr_num.perfect = perfect(usr_num.num);
-                        write_file(usr_num, filename);
-                        num_state = "saved in record";
+                        usr_num.prime = read_file(usr_num).prime;
+                        edit_perfect_file(usr_num);
+                        num_state = "edited record";
                     }
-                    if (usr_num.perfect == 1)
-                        cout << "Number is perfect(" << num_state << ")\n";
-                    else   
-                        cout << "Number is not perfect(" << num_state << ")\n";
+                    else
+                        num_state = "read from record";
+                }
+              else
+                {
+                    usr_num.perfect = perfect(usr_num.num);//stores values 0(for not prime) and 1(for prime)
+                    write_file(usr_num, filename);
+                    num_state = "saved in record";
+                }
+                //showing the number's status to user
+                if (usr_num.perfect == 1)
+                    cout << "Number is perfect(" << num_state << ")\n";
+                else   
+                    cout << "Number is not perfect(" << num_state << ")\n";
                 }
                 break;
             }

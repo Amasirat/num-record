@@ -21,9 +21,8 @@ void menu()
 number createNum()
 {
     number usr_num;
-    //an effort to reduce the possibility of compiler initilizing variable to zero
-    usr_num.num = -1;  
-
+    
+    usr_num.num = -1;       //to reduce the possibility of compiler initilizing variable to zero 
     usr_num.prime = -1;     //Default unknown state
     usr_num.perfect = -1;   //Default unknown state
 
@@ -83,6 +82,7 @@ switch (x)
 		return 1;
 		break;
 }
+//for getting even numbers out of the way
 if (x % 2 == 0)
 	return 0;
 for (int i = 2; i <= x/2; i++)
@@ -91,6 +91,7 @@ for (int i = 2; i <= x/2; i++)
 	if (remainder == 0)
 		break;
 }
+
 if (remainder != 0)
 	return 1;
 else

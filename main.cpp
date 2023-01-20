@@ -1,9 +1,8 @@
 #include "elements.cpp"
-//this program currently cannot read a number that was already evaluated for another status before
 int main()
 {
-    bool end = false;     //a flag to determine the end of the program used in a while loop
-    int mode_program;
+    bool end = false;     //a flag to determine the end of the program used in a while loop condition
+    int mode_program;     //determine mode of the program, checking prime or perfect numbers mode or else
     string num_state;     //to determine if number was read from file or written on file
 
     ifstream file(filename);
@@ -12,7 +11,7 @@ int main()
     
     while (end == false)
     {
-        menu();//prints out menu(funcs.cpp)
+        menu();//prints out menu
         cin >> mode_program;
         switch (mode_program)
         {
@@ -107,7 +106,7 @@ int main()
                 end = true;
                 break;
             default:
-            //for ignoring invalid flag for cin due to possible data type error created by the user
+             //for ignoring invalid flag for cin due to possible data type error created by the user
                 cin.clear();
                 cin.ignore();                
                 cout << "Your entry is unsupported\n";

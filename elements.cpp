@@ -102,8 +102,8 @@ int numCheck(int num)
 {
 	number record_num;
 	fstream record(filename, ios::in);
-	//if (!record)
-	//	cout << "Error! Can not find record in directory"; //needs a better way of handling this possibility
+	if (!record)
+		cout << "Error! Can not find record in directory";
 	while(!record.eof())
 	{
 		record >> record_num.num >> record_num.prime >> record_num.perfect;
@@ -136,6 +136,8 @@ number read_file(number num)
 void write_file(number usr_num , string name)
 {
 	fstream record(name, ios::app);
+	if (!record)
+		cout << "Error! could not open record\n";
 	record << '\n' << usr_num.num << '\t' << '\t' << usr_num.prime << '\t' << '\t' << usr_num.perfect;
 	record.close();
 }
@@ -165,6 +167,8 @@ void edit_prime_file(number usr_num)
 	int index = find_prime_index(usr_num);
 	genrecord(tempfilename);
 	fstream record(filename, ios::in);
+	if (!record)
+		cout << "Error! Could not open record\n";
 	fstream newrecord(tempfilename,ios::app);
 	for (int i = 1;!record.eof();i++)
 	{
@@ -186,6 +190,8 @@ int find_perfect_index(number usr_num)
 {
 	number record_num;
 	fstream record(filename, ios::in);
+	if (!record)
+		cout << "Error! Could not open record\n";
 	int index = 1;
 	while (!record.eof())
 	{
@@ -207,6 +213,8 @@ void edit_perfect_file(number usr_num)
 	int index = find_perfect_index(usr_num);
 	genrecord(tempfilename);
 	fstream record(filename, ios::in);
+	if(!record)
+		cout << "Error! could not open file\n";
 	fstream newrecord(tempfilename,ios::app);
 	for (int i = 1;!record.eof();i++)
 	{

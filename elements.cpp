@@ -1,7 +1,9 @@
 #include <iostream>
 #include <fstream>
-using namespace std;
-const char filename[] = "record.txt";
+#include <string>
+#include <cstdlib>
+using namespace std;		//std namespace is the only namespace used in the scope of this project
+const char filename[] = "record.txt";		//global record name
 //struct of type number containing three elements
 struct number{
     int num;
@@ -17,6 +19,14 @@ void menu()
 	cout << "4.Clear screen\n";
 	cout << "5.End program\n";
 }
+void clrscreen()
+{
+	#ifdef WINDOWS
+		system("cls");
+	#else
+		system("clear");
+	#endif
+}
 //initializing variable of type number to store user number and its status
 number createNum()
 {
@@ -29,10 +39,10 @@ number createNum()
 	return usr_num;
 }
 //get a natural number from user and return it
-int getNum()
+int getNum(string mode)
 {
     int num;
-	cout << "Enter a natural number(0 to exit mode):\n";
+	cout << mode << " Enter a natural number(0 to exit mode):\n";
     while(cin >> num && num < 0 || cin.fail())
     {
     	//ignore inputs that are not integers
@@ -52,26 +62,25 @@ void genrecord(string name)
 //function for checking if a positive integer is a perfect number, returns 0 if false and 1 if true
 int perfect(int x)
 {
-	int sum = 1;
-	if (x % 2 != 0)
+	if (x % 2 != 0)		//perfect numbers can not be odd so we get that out of the way first
 		return 0;
+
+	int sum = 1;	//1 will always be in the sum of all numbers' divisions
 	for(int i = 2; i <= x/2;i++)
 		if(x % i == 0)
 			sum += i;
+
 	if (sum == x)
-		return 1;
+		return 1;		//1 means perfect
 	else 
-		return 0;
+		return 0;		//0 means not perfect
 }
 //function for checking if an integer is prime, returns 0 if false and 1 if true
 int prime(int x)
 {
 int remainder{};
-switch (x)
+switch (x)		//to get the first three numbers out of the way because I start checking from 2
 {
-	case 0:
-		return 0;
-		break;
 	case 1:
 		return 0;
 		break;
@@ -91,11 +100,10 @@ for (int i = 2; i <= x/2; i++)
 	if (remainder == 0)
 		break;
 }
-
 if (remainder != 0)
-	return 1;
+	return 1;		//1 means prime
 else
-	return 0;
+	return 0;		//0 means not prime
 }
 //checks if a number exists in record. 0 for (not in record) and 1 for (in record)
 int numCheck(int num)
@@ -141,52 +149,8 @@ void write_file(number usr_num , string name)
 	record << '\n' << usr_num.num << '\t' << '\t' << usr_num.prime << '\t' << '\t' << usr_num.perfect;
 	record.close();
 }
-//find index of number with unknown prime status
-int find_prime_index(number usr_num)
-{
-	number record_num;
-	fstream record(filename, ios::in);
-	int index = 1;
-	while (!record.eof())
-	{
-		record >> record_num.num >> record_num.prime >> record_num.perfect;
-		if (record_num.num == usr_num.num && record_num.prime == -1)
-			break;
-		index++;
-	}
-	record.close();
-	cout << index << '\n';
-	return index;
-}
-//edit a number with unknown prime status
-void edit_prime_file(number usr_num)
-{
-	const char tempfilename[] = "temprecord.txt";
-	number record_num;
-
-	int index = find_prime_index(usr_num);
-	genrecord(tempfilename);
-	fstream record(filename, ios::in);
-	if (!record)
-		cout << "Error! Could not open record\n";
-	fstream newrecord(tempfilename,ios::app);
-	for (int i = 1;!record.eof();i++)
-	{
-		record >> record_num.num >> record_num.prime >> record_num.perfect;
-		if (record_num.num == 0)
-			continue;
-
-		if (i == index)	
-			write_file(usr_num, tempfilename);
-		else
-			write_file(record_num, tempfilename);
-	}
-	record.close();
-	newrecord.close();
-	rename(tempfilename, filename);
-}
 //find index of number with unknown perfect status
-int find_perfect_index(number usr_num)
+int find_index(number usr_num)
 {
 	number record_num;
 	fstream record(filename, ios::in);
@@ -196,26 +160,25 @@ int find_perfect_index(number usr_num)
 	while (!record.eof())
 	{
 		record >> record_num.num >> record_num.prime >> record_num.perfect;
-		if (record_num.num == usr_num.num && record_num.perfect == -1)
+		if (record_num.num == usr_num.num)
 			break;
 		index++;
 	}
 	record.close();
-	cout << index << '\n';
 	return index;
 }
-//edit number in record with unknown perfect status
-void edit_perfect_file(number usr_num)
+//edit a number with unknown status
+void edit_file(number usr_num)
 {
 	const char tempfilename[] = "temprecord.txt";
 	number record_num;
 
-	int index = find_perfect_index(usr_num);
+	int index = find_index(usr_num);
 	genrecord(tempfilename);
 	fstream record(filename, ios::in);
-	if(!record)
-		cout << "Error! could not open file\n";
-	fstream newrecord(tempfilename,ios::app);
+	if (!record)
+		cout << "Error! Could not open record\n";
+		
 	for (int i = 1;!record.eof();i++)
 	{
 		record >> record_num.num >> record_num.prime >> record_num.perfect;
@@ -228,13 +191,12 @@ void edit_perfect_file(number usr_num)
 			write_file(record_num, tempfilename);
 	}
 	record.close();
-	newrecord.close();
 	rename(tempfilename, filename);
 }
 //generates 10 random numbers and saves them in record with their prime and perfect status checked
 void numGenerate()
 {
-	const int range = 1000;
+	const int range = 1000;		//generated number can not exceed 999
 	number num;
 	srand((unsigned) time(NULL));
 

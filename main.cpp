@@ -11,16 +11,17 @@ int main()
     
     while (end == false)
     {
-        menu();//prints out menu
+        menu();       //prints out menu
         cin >> mode_program;
         switch (mode_program)
         {
             case 1:
-            {  
+            {
+                clrscreen();  
                 int ender{1};
                 while (ender != 0){
                 number usr_num = createNum();   //initializing a var for storing user's number
-                usr_num.num = getNum();     //get number and store it in num element of the number struct
+                usr_num.num = getNum("Prime mode)");     //get number and store it in num element of the number struct
 
                 if (usr_num.num == 0)       //give user the ability to quit modes
                 {  
@@ -34,7 +35,7 @@ int main()
                     {
                         usr_num.prime = prime(usr_num.num);
                         usr_num.perfect = read_file(usr_num).perfect;
-                        edit_prime_file(usr_num);
+                        edit_file(usr_num);
                         num_state = "edited record";
                     }
                     else
@@ -56,10 +57,11 @@ int main()
             }
             case 2:
             {
+                clrscreen();
                 int ender{1};       //used as condition checker for the while loop
                 while (ender != 0){
                     number usr_num = createNum();   //initializing var for user number and its status
-                    usr_num.num = getNum();         //obtain user number
+                    usr_num.num = getNum("Perfect mode)");         //obtain user number
 
                     if (usr_num.num == 0)
                     {
@@ -74,7 +76,8 @@ int main()
                     {
                         usr_num.perfect = perfect(usr_num.num);
                         usr_num.prime = read_file(usr_num).prime;
-                        edit_perfect_file(usr_num);
+
+                        edit_file(usr_num);
                         num_state = "edited record";
                     }
                     else
@@ -95,12 +98,12 @@ int main()
                 break;
             }
             case 3:
+                clrscreen();
                 numGenerate();
                 cout << "Generated 10 numbers and added them to record\n";
                 break;
             case 4:
-                system("clear");    //clearing the screen for linux and mac terminals
-                //system("cls")     //clearing the screen of the windows console
+                clrscreen();
                 break;
             case 5:
                 end = true;
